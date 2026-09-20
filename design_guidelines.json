@@ -1,0 +1,198 @@
+{
+  "app_name": "Croiss'Marche",
+  "personality": "4 Tactile / Playful LIGHT fused with 3 Editorial typography",
+  "personality_one_liner": "A warm, tactile early-morning boulangerie experience that rewards your steps with golden pastries, using physical-feeling interfaces and rich typography.",
+  "color": {
+    "surface": "#FDF8F0",
+    "onSurface": "#2A1C10",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#2A1C10",
+    "surfaceTertiary": "#F2D9B0",
+    "onSurfaceTertiary": "#7A4618",
+    "surfaceInverse": "#2A1C10",
+    "onSurfaceInverse": "#FDF8F0",
+    "brand": "#C97B2C",
+    "onBrand": "#FFFFFF",
+    "brandPrimary": "#C97B2C",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#7A4618",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#F2D9B0",
+    "onBrandTertiary": "#7A4618",
+    "success": "#4A7C3F",
+    "onSuccess": "#FFFFFF",
+    "warning": "#E09F3E",
+    "onWarning": "#2A1C10",
+    "error": "#D9534F",
+    "onError": "#FFFFFF",
+    "info": "#7DA2A9",
+    "onInfo": "#FFFFFF",
+    "border": "#E6D5C3",
+    "borderStrong": "#C97B2C",
+    "divider": "#E6D5C3",
+    "muted": "#8C7765"
+  },
+  "typography": {
+    "displayFontFamily": "Fraunces",
+    "textFontFamily": "Inter",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24,
+      "3xl": 32,
+      "4xl": 48
+    }
+  },
+  "spacing": {
+    "rule": "Generous and tactile. Give components breathing room to feel like physical cards on a table.",
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 48,
+    "3xl": 64
+  },
+  "radius_tokens": {
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "pill": 999
+  },
+  "shadow_tier": "2",
+  "navigation": "stack_only",
+  "icon_set": "Feather",
+  "glassmorphism": {
+    "enabled": "false",
+    "do's": [
+      "Use tactile shadows and solid colors to create depth."
+    ],
+    "dont's": [
+      "Avoid blur and glass effect, keep the aesthetic warm, matte, and physical like paper and crust."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-blur",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "WalkerHome",
+      "purpose": "Show the CC balance and immediately answer 'how far am I from my next pastry?', followed by nearby bakeries.",
+      "states": {
+        "loading": "Centered soft brown spinner.",
+        "empty": "N/A - Data always present.",
+        "error": "Message in muted brown with a brand CTA to retry."
+      },
+      "layout": "Root uses #FDF8F0. Top half: tactile card or direct surface text with massive Fraunces font for the CC balance, a thick progress bar (brand color), and exactly one sentence: 'encore 1 200 pas aujourd'hui'. Below the fold: a static mini-map as a visual marker, followed by a list of partners sorted by walking distance. Each list row: name, distance in mins, reward, and a pill for 'disponible maintenant' (success) or 'à partir de 14h' (muted). List items are chunky, tappable cards (#FFFFFF) with shadow_tier 2."
+    },
+    {
+      "name": "ActiveVoucher",
+      "purpose": "Display the active code 'Ma contremarque' for the bakery partner to validate.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "Illustration of a sad empty pastry bag if no code active.",
+        "error": "Error fetching the code."
+      },
+      "layout": "Massive 4-digit code in Fraunces centered on screen with high contrast. A ticking countdown clock below. A large QR code or tactile bounding box around the code. Uses brandPrimary background with onBrandPrimary text for the top half to feel like a premium ticket."
+    },
+    {
+      "name": "WalkerHistory",
+      "purpose": "Log of days walked, CC earned, and vouchers used.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "Illustration of a closed ledger.",
+        "error": "Failed to load history."
+      },
+      "layout": "Chronological timeline view. Uses left-aligned vertical line. Each item shows day, CC amount, and pastry icon for redemptions."
+    },
+    {
+      "name": "PremiumUpsell",
+      "purpose": "Sell the 4,99 €/month subscription for faster points.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "N/A",
+        "error": "Error loading purchase info."
+      },
+      "layout": "Full bleed background image of a beautiful morning pastry spread with a gradient-to-dark scrim. Massive Fraunces headline: 'Ta viennoiserie tous les 4 jours au lieu de 9'. Sticky bottom CTA to subscribe."
+    },
+    {
+      "name": "PartnerValidation",
+      "purpose": "Fullscreen code entry for bakeries to validate user vouchers behind the counter.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "N/A",
+        "error": "Invalid code alert."
+      },
+      "layout": "Landscape/Portrait fluid design. Giant numeric keypad taking up bottom 60% of the screen (perfect for one-handed iPad/tablet use). Top section displays entered code. Success state flashes #4A7C3F screen with a huge checkmark."
+    },
+    {
+      "name": "PartnerStats",
+      "purpose": "Monthly summary of vouchers redeemed and new vs returning customers.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "No data for this month.",
+        "error": "Error fetching stats."
+      },
+      "layout": "Headline metric card showing New vs Returning customers prominently. Below: estimated revenue generated and total vouchers used. Use thick, soft bar charts."
+    },
+    {
+      "name": "PartnerSettings",
+      "purpose": "Configure off-peak window and reward description.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "N/A",
+        "error": "Error saving settings."
+      },
+      "layout": "Simple form. 'De' and 'À' time pickers for off-peak hours. Text input for reward. Toggle to pause."
+    },
+    {
+      "name": "AdminDashboard",
+      "purpose": "Manage partners and view global metrics.",
+      "states": {
+        "loading": "Spinner",
+        "empty": "No partners found.",
+        "error": "Error fetching data."
+      },
+      "layout": "Global metrics cards at top. List of partners below with a 'Add' FAB. The add form includes a 500m exclusivity radius check via Map component."
+    }
+  ],
+  "images": {
+    "hero_croissant": {
+      "url": "https://images.unsplash.com/photo-1769434129115-779ab040c5f9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMGNyb2lzc2FudCUyMHBhc3RyeSUyMG9uJTIwcnVzdGljJTIwdGFibGV8ZW58MHx8fHwxNzg5OTE5NDMxfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Croissant with nuts and glaze on a rustic table"
+    },
+    "boulangerie_storefront": {
+      "url": "https://images.pexels.com/photos/39040343/pexels-photo-39040343.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "A classic Parisian bakery corner storefront"
+    },
+    "premium_upsell_bg": {
+      "url": "https://images.unsplash.com/photo-1675125530909-15213f01a9e1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwyfHxjb2ZmZWUlMjBhbmQlMjBtb3JuaW5nJTIwcGFzdHJ5JTIwYWVzdGhldGljfGVufDB8fHx8MTc4OTkxOTQzMXww&ixlib=rb-4.1.0&q=85",
+      "alt": "Breakfast tray with coffee and croissants for the premium upsell screen"
+    }
+  },
+  "haptics": {
+    "button_press": "light",
+    "voucher_reveal": "medium",
+    "step_progress": "selection",
+    "partner_code_success": "heavy"
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the color palette provided by the user (Primary #C97B2C, Deep #7A4618, Soft #F2D9B0, Bg #FDF8F0, Text #2A1C10). Never inject blue, indigo, or default AI colors.",
+    "Typography: Use Fraunces for all headings and large numbers (e.g., CC balance, voucher codes). Use Inter for body text, labels, and UI elements. Ensure large numbers are the prominent feature of the home screen.",
+    "Layout Variation: Do NOT use a single centered card layout for every screen. The Home screen is a split layout (large metrics above fold, map + list below). Active Voucher is a premium 'ticket' layout. Partner Validation is a fullscreen massive keypad for one-handed operation.",
+    "Tactile UI: Use physical-feeling components. The Home screen should use a digital punch-card or thick progress ring for the reward progress (as learned from research: tactile stamp animations drive engagement).",
+    "Gradient Scrim: The Premium Upsell screen uses a full-bleed photo (`premium_upsell_bg`) - you MUST implement a gradient-to-dark vertical scrim (transparent to >= 70% surfaceInverse) to ensure the white Fraunces text on top is fully readable.",
+    "Role Isolation: There are three roles (Walker, Partner, Admin). Do not share navigation between them. Each role gets its own dedicated stack/entry point after login."
+  ]
+}

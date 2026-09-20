@@ -1,0 +1,36 @@
+{
+  "summary": "Full-stack review of Croiss'Marche (FastAPI + MongoDB + Expo RN Web). Backend: 26/26 integration tests + 11/11 engine unit tests PASS. Frontend: login (3 roles), walker home (152 CC, PREMIUM badge, partners sorted by distance with windowText + availableNow), voucher creation at Le Fournil du Castillet (code 2617 with 10-min countdown), double-active refusal ('Tu as déjà une contremarque active'), partner numeric keypad validation with green success overlay ('Contremarque validée · 1 chouquette · Minimum 2,50 € · CLIENT FIDÈLE'), and admin dashboard/dev panel all work end-to-end. French formatting correct throughout: narrow-space thousands ('3 053'), currency '2,50 €' / '297,00 €', windows '14h00 à 17h00'; no English strings and no euro value ever shown next to CC. 500 m exclusivity returns 409 and force=true succeeds. Signup refuses without RGPD consent.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Admin dashboard", "issues": ["Test-created partners (TEST_ExclForced_*) appear as EN PAUSE rows because DELETE /api/admin/partners/{id} only pauses (soft delete). Not a bug per PRD (soft-delete is intentional), but consider hiding paused test rows or adding a real hard-delete for cleanup."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_api_integration.py",
+    "/app/backend/tests/conftest.py",
+    "/app/backend/tests/test_engine.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Add hard-delete endpoint for admin to purge test partners, or filter EN PAUSE rows from the 'Validations par partenaire' widget."
+  ],
+  "critical_code_review_comments": [
+    "server.py = 619 lines — close to the 700-line ceiling; consider splitting walker / partner / admin routers into separate modules if it grows further.",
+    "Pydantic model DevAgeBody allows monthsAgo=0 which is fine, but there is no bound (could be negative). Add ge=0 to be safe.",
+    "PartnerBody.offPeakDays uses a mutable default list; pydantic v2 handles it but consider default_factory=list for clarity."
+  ],
+  "updated_files": [
+    "/app/backend/tests/conftest.py (created)",
+    "/app/backend/tests/test_api_integration.py (created)"
+  ],
+  "success_rate": {"backend": "100% (26/26 integration + 11/11 engine)", "frontend": "100% of critical flows verified"},
+  "seed_data_creation": "TestVoucherFlow injects 240 CC into Marie via /admin/dev/age-cc to guarantee voucher creation. TestAdmin.test_500m_exclusivity_conflict_then_force creates one 'TEST_ExclForced_*' partner then soft-deletes it (leaves EN PAUSE rows in admin dashboard).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend URL EXPO_PUBLIC_BACKEND_URL = https://croiss-marche.preview.emergentagent.com. Password for all seeded accounts = croissant123. Le Fournil du Castillet (contact@castillet.fr) has a 07:00-21:00 window every day so voucher create+validate works anytime; the other 5 bakeries are 14:00-17:00 weekdays only. Run all backend tests via: cd /app/backend && python -m pytest tests/ -v -o addopts=''.",
+  "rca_of_issue": "N/A — no bugs found. All 7 areas in the review (auth, walker home, voucher create/refuse, partner validate incl. double + wrong bakery, partner stats/billing/settings, admin metrics/users/partners+exclusivity, admin dev panel) pass both API and UI checks."
+}
